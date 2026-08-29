@@ -7,7 +7,7 @@ import CollegeLogo from '../CollegeLogo';
  */
 export default function UgRegistrationPreview({ data }) {
   return (
-    <div className="bg-white text-black p-8 sm:p-12 max-w-[800px] mx-auto shadow-md border border-slate-200 printable-area font-sans selection:bg-none">
+    <div className="bg-white text-black p-8 sm:p-10 w-[800px] min-w-[800px] mx-auto shadow-md border border-slate-200 printable-area font-sans selection:bg-none box-border">
       {/* College Emblem & Header Banner */}
       <div className="flex items-center justify-center gap-4 mb-3 border-b-2 border-black pb-2">
         <CollegeLogo className="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0" />
@@ -33,7 +33,7 @@ export default function UgRegistrationPreview({ data }) {
         {/* Row 1: CLASS and ROLL NO */}
         <div className="flex items-baseline justify-between gap-4">
           <div className="flex items-baseline flex-1">
-            <span className="flex-shrink-0">CLASS-</span>
+            <span className="flex-shrink-0 whitespace-nowrap">CLASS-</span>
             <span className="ml-1 flex-1 border-b-[1.5px] border-dotted border-black px-1 uppercase font-bold min-h-[1.35rem] leading-tight">
               {data.className || ''}
             </span>

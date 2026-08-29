@@ -6,7 +6,7 @@ import React from 'react';
  */
 export default function IdCardPreview({ data }) {
   return (
-    <div className="bg-white text-black p-8 sm:p-12 max-w-[800px] mx-auto shadow-md border border-slate-200 printable-area font-sans selection:bg-none">
+    <div className="bg-white text-black p-8 sm:p-10 w-[800px] min-w-[800px] mx-auto shadow-md border border-slate-200 printable-area font-sans selection:bg-none box-border">
       {/* Official Header */}
       <div className="text-center mb-8">
         <h1 className="text-xl sm:text-2xl font-extrabold tracking-wide uppercase underline decoration-2 underline-offset-4 font-serif">
@@ -26,7 +26,7 @@ export default function IdCardPreview({ data }) {
         <div className="flex-1 space-y-4 text-sm sm:text-base font-medium">
           {/* 1. Student's Name */}
           <div className="flex items-baseline">
-            <span className="font-bold flex-shrink-0">1. Student’s Name:</span>
+            <span className="font-bold flex-shrink-0 whitespace-nowrap">1. Student’s Name:</span>
             <span className="ml-2 flex-1 border-b-[1.5px] border-dotted border-black px-1 font-semibold uppercase tracking-wide min-h-[1.5rem] leading-tight">
               {data.studentName || ''}
             </span>

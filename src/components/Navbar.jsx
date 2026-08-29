@@ -7,9 +7,9 @@ export default function Navbar({ onJumpToPreview, isDarkMode, onToggleDarkMode }
     <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
         {/* Brand */}
-        <div className="flex items-center gap-2.5">
-          <CollegeLogo className="w-8 h-8 flex-shrink-0" />
-          <span className="font-semibold text-sm sm:text-base text-slate-900 dark:text-slate-100 tracking-tight">
+        <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <CollegeLogo className="w-7 h-7 sm:w-8 sm:h-8 flex-shrink-0" />
+          <span className="font-semibold text-xs sm:text-base text-slate-900 dark:text-slate-100 tracking-tight truncate">
             Govt. College, Sector-9 Gurugram
           </span>
         </div>

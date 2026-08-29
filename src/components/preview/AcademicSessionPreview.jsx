@@ -7,7 +7,7 @@ import CollegeLogo from '../CollegeLogo';
  */
 export default function AcademicSessionPreview({ data }) {
   return (
-    <div className="bg-white text-black p-8 sm:p-12 max-w-[800px] mx-auto shadow-md border border-slate-200 printable-area font-sans selection:bg-none">
+    <div className="bg-white text-black p-8 sm:p-10 w-[800px] min-w-[800px] mx-auto shadow-md border border-slate-200 printable-area font-sans selection:bg-none box-border">
       {/* Header Banner */}
       <div className="flex items-center justify-center gap-4 mb-2">
         <CollegeLogo className="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0" />
@@ -157,25 +157,25 @@ export default function AcademicSessionPreview({ data }) {
         {/* Domicile, Area Type, Gender, IS NCC/NSS */}
         <div className="flex items-baseline justify-between gap-2">
           <div className="flex items-baseline flex-1">
-            <span className="flex-shrink-0">DOMICILE:</span>
+            <span className="flex-shrink-0 whitespace-nowrap">DOMICILE:</span>
             <span className="ml-1 flex-1 border-b-[1.5px] border-dotted border-black px-1 min-h-[1.35rem] leading-tight">
               {data.domicile || ''}
             </span>
           </div>
           <div className="flex items-baseline flex-1">
-            <span className="flex-shrink-0">AREA TYPE:</span>
+            <span className="flex-shrink-0 whitespace-nowrap">AREA TYPE:</span>
             <span className="ml-1 flex-1 border-b-[1.5px] border-dotted border-black px-1 min-h-[1.35rem] leading-tight">
               {data.areaType || ''}
             </span>
           </div>
           <div className="flex items-baseline flex-1">
-            <span className="flex-shrink-0">GENDER-</span>
+            <span className="flex-shrink-0 whitespace-nowrap">GENDER:</span>
             <span className="ml-1 flex-1 border-b-[1.5px] border-dotted border-black px-1 min-h-[1.35rem] leading-tight">
               {data.gender || ''}
             </span>
           </div>
           <div className="flex items-baseline flex-1">
-            <span className="flex-shrink-0">IS NCC/NSS:</span>
+            <span className="flex-shrink-0 whitespace-nowrap">IS NCC/NSS:</span>
             <span className="ml-1 flex-1 border-b-[1.5px] border-dotted border-black px-1 min-h-[1.35rem] leading-tight">
               {data.isNccNss || ''}
             </span>

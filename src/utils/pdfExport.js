@@ -33,8 +33,11 @@ export const downloadFormAsPdf = async (targetElement, filename = 'Official_Form
         );
         if (clonedEl) {
           clonedEl.style.transform = 'none';
+          clonedEl.style.position = 'static';
           clonedEl.style.boxShadow = 'none';
           clonedEl.style.margin = '0 auto';
+          clonedEl.style.width = '800px';
+          clonedEl.style.minWidth = '800px';
         }
       },
     });
