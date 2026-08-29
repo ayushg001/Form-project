@@ -115,15 +115,29 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Handle generic input changes
+  // Handle generic input changes with live sanitization
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+
+    // Strict live input filtering for numeric fields
+    if (name === 'mobileNumber' || name === 'mobileNo' || name === 'emergencyContact') {
+      value = value.replace(/\D/g, '').slice(0, 10);
+    } else if (name === 'aadharNo') {
+      value = value.replace(/\D/g, '').slice(0, 12);
+    } else if (name === 'pincode') {
+      value = value.replace(/\D/g, '').slice(0, 6);
+    }
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
       ...(name === 'mobileNumber' ? { mobileNo: value } : {}),
       ...(name === 'mobileNo' ? { mobileNumber: value } : {}),
     }));
+
+    if (errorMessage) {
+      setErrorMessage('');
+    }
   };
 
   const handlePhotoChange = (url) => {
@@ -174,9 +188,89 @@ export default function App() {
     }
   };
 
+  // Comprehensive Input Validation
+  const validateForm = () => {
+    // 1. Student Name
+    if (!formData.studentName || !formData.studentName.trim()) {
+      return "Please enter student's full name.";
+    }
+
+    // 2. Class & Roll No
+    if (!formData.className || !formData.className.trim()) {
+      return 'Please enter class name.';
+    }
+    if (!formData.rollNo || !formData.rollNo.trim()) {
+      return 'Please enter roll number.';
+    }
+
+    // 3. Date of Birth
+    if (formData.dob) {
+      const dobDate = new Date(formData.dob);
+      const today = new Date();
+      if (dobDate > today) {
+        return 'Date of birth cannot be in the future.';
+      }
+    }
+
+    // 4. Mobile Number (Strict 10-digit validation)
+    const mobile = formData.mobileNumber || formData.mobileNo;
+    if (!mobile || !mobile.trim()) {
+      return 'Please enter a 10-digit mobile number.';
+    }
+    if (!/^\d{10}$/.test(mobile)) {
+      return `Mobile number must be exactly 10 digits (currently ${mobile.length} digits).`;
+    }
+
+    // 5. Emergency Contact (If provided, must be 10 digits)
+    if (formData.emergencyContact && !/^\d{10}$/.test(formData.emergencyContact)) {
+      return `Emergency contact number must be exactly 10 digits (currently ${formData.emergencyContact.length} digits).`;
+    }
+
+    // 6. Aadhar Number Validation (UG Registration & Academic Session)
+    if (selectedForm === FORM_TYPES.UG_REGISTRATION || selectedForm === FORM_TYPES.ACADEMIC_SESSION) {
+      if (!formData.aadharNo || !formData.aadharNo.trim()) {
+        return 'Please enter 12-digit Aadhar number.';
+      }
+      if (!/^\d{12}$/.test(formData.aadharNo)) {
+        return `Aadhar number must be exactly 12 digits (currently ${formData.aadharNo.length} digits).`;
+      }
+    }
+
+    // 7. Email Validation (UG Registration & Academic Session)
+    if (selectedForm === FORM_TYPES.UG_REGISTRATION || selectedForm === FORM_TYPES.ACADEMIC_SESSION) {
+      if (!formData.email || !formData.email.trim()) {
+        return 'Please enter email address.';
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        return 'Please enter a valid email address (e.g. name@example.com).';
+      }
+    }
+
+    // 8. Pincode Validation (Academic Session)
+    if (selectedForm === FORM_TYPES.ACADEMIC_SESSION) {
+      if (!formData.pincode || !formData.pincode.trim()) {
+        return 'Please enter 6-digit PIN code.';
+      }
+      if (!/^\d{6}$/.test(formData.pincode)) {
+        return `PIN code must be exactly 6 digits (currently ${formData.pincode.length} digits).`;
+      }
+    }
+
+    return null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
+
+    // Run input validation
+    const validationError = validateForm();
+    if (validationError) {
+      setErrorMessage(validationError);
+      window.scrollTo({ top: 80, behavior: 'smooth' });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {

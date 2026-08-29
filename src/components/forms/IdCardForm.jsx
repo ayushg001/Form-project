@@ -70,6 +70,7 @@ export default function IdCardForm({ formData, onChange, onPhotoChange }) {
               name="dob"
               value={formData.dob || ''}
               onChange={onChange}
+              max={new Date().toISOString().split('T')[0]}
               required
               className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-lg focus:ring-2 focus:ring-primary-500 focus:bg-white dark:focus:bg-slate-700 focus:border-transparent transition"
             />
@@ -134,8 +135,13 @@ export default function IdCardForm({ formData, onChange, onPhotoChange }) {
 
         {/* 7. Mobile Number */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
-            7. Mobile Number <span className="text-red-500">*</span>
+          <label className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+            <span>7. Mobile Number <span className="text-red-500">*</span></span>
+            {formData.mobileNumber && (
+              <span className={formData.mobileNumber.length === 10 ? 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400' : 'text-[11px] font-medium text-amber-500'}>
+                {formData.mobileNumber.length === 10 ? '✓ 10 digits' : `${formData.mobileNumber.length}/10 digits`}
+              </span>
+            )}
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -143,6 +149,8 @@ export default function IdCardForm({ formData, onChange, onPhotoChange }) {
             </div>
             <input
               type="tel"
+              inputMode="numeric"
+              pattern="[0-9]{10}"
               name="mobileNumber"
               value={formData.mobileNumber || ''}
               onChange={onChange}
@@ -184,8 +192,13 @@ export default function IdCardForm({ formData, onChange, onPhotoChange }) {
 
         {/* 9. Emergency Contact */}
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
-            9. Emergency Contact
+          <label className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+            <span>9. Emergency Contact</span>
+            {formData.emergencyContact && (
+              <span className={formData.emergencyContact.length === 10 ? 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400' : 'text-[11px] font-medium text-amber-500'}>
+                {formData.emergencyContact.length === 10 ? '✓ 10 digits' : `${formData.emergencyContact.length}/10 digits`}
+              </span>
+            )}
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -193,6 +206,8 @@ export default function IdCardForm({ formData, onChange, onPhotoChange }) {
             </div>
             <input
               type="tel"
+              inputMode="numeric"
+              pattern="[0-9]{10}"
               name="emergencyContact"
               value={formData.emergencyContact || ''}
               onChange={onChange}

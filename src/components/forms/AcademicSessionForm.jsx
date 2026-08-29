@@ -123,6 +123,7 @@ export default function AcademicSessionForm({
               name="dob"
               value={formData.dob || ''}
               onChange={onChange}
+              max={new Date().toISOString().split('T')[0]}
               required
               className="w-full pl-9 pr-3 py-2.5 text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-lg focus:ring-2 focus:ring-purple-500 focus:bg-white dark:focus:bg-slate-700 focus:border-transparent transition"
             />
@@ -180,8 +181,13 @@ export default function AcademicSessionForm({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
-            MOBILE NO. <span className="text-red-500">*</span>
+          <label className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+            <span>MOBILE NO. <span className="text-red-500">*</span></span>
+            {formData.mobileNo && (
+              <span className={formData.mobileNo.length === 10 ? 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400' : 'text-[11px] font-medium text-amber-500'}>
+                {formData.mobileNo.length === 10 ? '✓ 10 digits' : `${formData.mobileNo.length}/10 digits`}
+              </span>
+            )}
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -189,6 +195,8 @@ export default function AcademicSessionForm({
             </div>
             <input
               type="tel"
+              inputMode="numeric"
+              pattern="[0-9]{10}"
               name="mobileNo"
               value={formData.mobileNo || ''}
               onChange={onChange}
@@ -201,8 +209,13 @@ export default function AcademicSessionForm({
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
-            AADHAR NO. <span className="text-red-500">*</span>
+          <label className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+            <span>AADHAR NO. <span className="text-red-500">*</span></span>
+            {formData.aadharNo && (
+              <span className={formData.aadharNo.length === 12 ? 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400' : 'text-[11px] font-medium text-amber-500'}>
+                {formData.aadharNo.length === 12 ? '✓ 12 digits' : `${formData.aadharNo.length}/12 digits`}
+              </span>
+            )}
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
@@ -210,6 +223,8 @@ export default function AcademicSessionForm({
             </div>
             <input
               type="text"
+              inputMode="numeric"
+              pattern="[0-9]{12}"
               name="aadharNo"
               value={formData.aadharNo || ''}
               onChange={onChange}
@@ -408,11 +423,18 @@ export default function AcademicSessionForm({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
-              PINCODE <span className="text-red-500">*</span>
+            <label className="flex items-center justify-between text-xs font-semibold text-slate-700 dark:text-slate-200 mb-1">
+              <span>PINCODE <span className="text-red-500">*</span></span>
+              {formData.pincode && (
+                <span className={formData.pincode.length === 6 ? 'text-[11px] font-semibold text-emerald-600 dark:text-emerald-400' : 'text-[11px] font-medium text-amber-500'}>
+                  {formData.pincode.length === 6 ? '✓ 6 digits' : `${formData.pincode.length}/6 digits`}
+                </span>
+              )}
             </label>
             <input
               type="text"
+              inputMode="numeric"
+              pattern="[0-9]{6}"
               name="pincode"
               value={formData.pincode || ''}
               onChange={onChange}
