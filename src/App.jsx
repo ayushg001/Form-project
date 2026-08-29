@@ -39,23 +39,31 @@ const INITIAL_QUALIFICATIONS = [
 ];
 
 export default function App() {
-  // Dark Mode State
+  // Dark Mode State with mobile-safe storage fallback
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      return savedTheme === 'dark';
+    try {
+      const savedTheme = typeof localStorage !== 'undefined' ? localStorage.getItem('theme') : null;
+      if (savedTheme) {
+        return savedTheme === 'dark';
+      }
+      return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } catch {
+      return false;
     }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
   // Apply dark mode class to HTML root element
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+    try {
+      if (isDarkMode) {
+        document.documentElement.classList.add('dark');
+        if (typeof localStorage !== 'undefined') localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        if (typeof localStorage !== 'undefined') localStorage.setItem('theme', 'light');
+      }
+    } catch {
+      // Ignore storage errors on restricted mobile browsers
     }
   }, [isDarkMode]);
 
